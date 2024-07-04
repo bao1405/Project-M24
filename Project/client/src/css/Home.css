@@ -1,0 +1,237 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* General styles */
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f3f4f6;
+  }
+  
+  .instagram-homepage {
+    max-width: 1500px;
+    margin: 0 auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .instagram-homepage nav {
+    background-color: #1e272e;
+    color: #fff;
+    padding: 10px 20px;
+  }
+  
+  .instagram-homepage nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .instagram-homepage nav ul li {
+    margin-right: 20px;
+  }
+  
+  .instagram-homepage nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .instagram-homepage nav ul li a:hover {
+    text-decoration: underline;
+  }
+  
+  .instagram-homepage header {
+    background-color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .instagram-homepage header .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .instagram-homepage main {
+    padding: 20px;
+  }
+  
+  .instagram-homepage .sidebar {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  .instagram-homepage .sidebar .btn {
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .instagram-homepage .sidebar ul {
+    list-style-type: none;
+    margin-top: 10px;
+  }
+  
+  .instagram-homepage .sidebar ul li {
+    margin-bottom: 10px;
+  }
+  
+  .instagram-homepage .sidebar ul li a {
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .instagram-homepage .main-content {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  .instagram-homepage .main-content .card {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  .instagram-homepage .main-content .card i {
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .instagram-homepage .main-content .card h3 {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+  }
+  
+  .instagram-homepage .main-content .card p {
+    color: #666;
+  }
+  
+  .instagram-homepage .main-content .form {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  .instagram-homepage .main-content .form .form-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .instagram-homepage .main-content .form p {
+    margin-bottom: 10px;
+  }
+  
+  .instagram-homepage .main-content .form .alert {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .instagram-homepage .main-content .form .alert .alert-icon {
+    width: 15px;
+    height: 15px;
+    background-color: #721c24;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .instagram-homepage .main-content .form table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .instagram-homepage .main-content .form table th,
+  .instagram-homepage .main-content .form table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  
+  .instagram-homepage .main-content .form table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  .instagram-homepage .main-content .form table td {
+    text-align: left;
+  }
+  
+  .instagram-homepage .main-content .form table button {
+    margin-right: 5px;
+  }
+  
+  .instagram-homepage .main-content .form .pagination {
+    margin-top: 10px;
+  }
+  
+  .instagram-homepage .main-content .form .pagination ul {
+    list-style-type: none;
+    display: flex;
+  }
+  
+  .instagram-homepage .main-content .form .pagination ul li {
+    margin-right: 5px;
+  }
+  
+  .instagram-homepage .main-content .form .pagination .pagination-btn {
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .instagram-homepage footer {
+    background-color: #f3f4f6;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #ccc;
+  }
+  
+  .instagram-homepage footer nav ul {
+    list-style-type: none;
+    display: flex;
+  }
+  
+  .instagram-homepage footer nav ul li {
+    margin-right: 20px;
+  }
+  
+  .instagram-homepage footer nav ul li:last-child {
+    margin-right: 0;
+  }
+  
+  .instagram-homepage .copyright {
+    font-size: 0.8rem;
+    color: #777;
+  }
+  

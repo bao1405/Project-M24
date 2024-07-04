@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+header{
+  text-decoration: none;
+  display: flex;
+  left: 10px;
+  
+}
+img{
+  height: 50px;
+  margin-left:10px;
+}
