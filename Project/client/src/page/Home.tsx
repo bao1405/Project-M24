@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchPosts, Post } from '../store/Api';
 import '../css/Home.css';
-import Header from './Header';
+import './Header'
 const InstagramHomePage: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
 
@@ -25,7 +25,7 @@ const InstagramHomePage: React.FC = () => {
 
   return (
     <div className="instagram-homepage">
-      <Header></Header>
+        <header></header>
       <main>
         <div className="container mx-auto my-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
