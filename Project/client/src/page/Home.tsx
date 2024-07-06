@@ -31,7 +31,7 @@ const InstagramHomePage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Sidebar */}
             <div className="sidebar">
-              <button className="btn">+ New Item</button>
+              <button className="btn">+ New</button>
               <ul>
                 <li>
                   <a href="#" onClick={() => toggleMenu('dashboard')} className="block py-2">
