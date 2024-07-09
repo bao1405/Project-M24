@@ -1,49 +1,68 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUserContext } from '../components/UserContext';
-
 const LoginForm: React.FC = () => {
-  const [formData, setFormData] = useState({ username: '', password: '' });
-  const [errors, setErrors] = useState({ username: '', password: '' });
-  const { login } = useUserContext();
-  const navigate = useNavigate();
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch('http://localhost:5000/users', {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      });
-
-      if (!response.ok) {
-        throw new Error('Login failed');
-      }
-
-      const data = await response.json();
-      const user = data.find((u: any) => u.username === formData.username && u.password === formData.password);
-
-      if (!user) {
-        throw new Error('Invalid credentials');
-      }
-
-      login(user); // Update the context with the logged-in user
-
-      navigate('/home'); // Navigate to the home page
-    } catch (error) {
-      console.error('Login error:', (error as Error).message);
-      setErrors({ username: 'Invalid credentials', password: 'Invalid credentials' });
-    }
-  };
+    const [formData, setFormData] = useState({ username: '', password: '' });
+    const [errors, setErrors] = useState({ username: '', password: '' });
+    const { login } = useUserContext();
+    const navigate = useNavigate();
+  
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setFormData({ ...formData, [name]: value });
+    };
+  
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+      
+        try {
+          const response = await fetch('http://localhost:5000/users', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+          });
+      
+          if (!response.ok) {
+            throw new Error('Login failed');
+          }
+      
+          const data = await response.json();
+          const user = data.find((u: any) => u.username === formData.username && u.password === formData.password);
+      
+          if (!user) {
+            throw new Error('Invalid credentials');
+          }
+      
+          if (!user.status) {
+            throw new Error('Your account is blocked. Please contact support.');
+          }
+      
+          // Update user login status to true
+          await fetch(`http://localhost:5000/users/${user.id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ loginstatus: true }),
+          });
+      
+          login(user); // Update the context with the logged-in user
+      
+          navigate('/home'); // Navigate to the home page
+        } catch (error) {
+          console.error('Login error:', (error as Error).message);
+          if ((error as Error).message === 'Invalid credentials') {
+            setErrors({ username: 'Invalid credentials', password: 'Invalid credentials' });
+          } else if ((error as Error).message === 'Your account is blocked. Please contact support.') {
+            setErrors({ username: 'Your account is blocked. Please contact support.', password: 'Your account is blocked. Please contact support.' });
+          } else {
+            setErrors({ username: 'Unknown error occurred', password: 'Unknown error occurred' });
+          }
+        }
+      };
+      
+  
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
+    <div className='LoginForm'>
+        <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="max-w-md w-full bg-white p-6 rounded-lg shadow-md">
         <div className="flex justify-center mb-6">
           <i
@@ -126,6 +145,14 @@ const LoginForm: React.FC = () => {
             Forgot password?
           </a>
         </form>
+        <div className="_ab21" style={{textAlign:"center", marginTop:"10px"}}>
+              <p className="_ab25">
+                Don't have an account?{' '}
+                <a className="text-blue-600" href="/register" role="link" tabIndex={0}>
+                  Sign up
+                </a>
+              </p>
+          </div>
         <div className="flex justify-center mt-6">
           <div className="text-sm text-gray-500">Get the app.</div>
         </div>
@@ -156,6 +183,7 @@ const LoginForm: React.FC = () => {
         </div>
       </div>
     </div>
+</div>
   );
 };
 

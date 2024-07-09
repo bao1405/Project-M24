@@ -1,7 +1,60 @@
 {
-    "users": [
-      { "id": 1, "username": "user1", "password": "password1" },
-      { "id": 2, "username": "user2", "password": "password2" }
-    ]
-  }
-  
+  "users": [
+    {
+      "id": "5596",
+      "avartar": "https://d1hjkbq40fs2x4.cloudfront.net/2016-01-31/files/1045-2.jpg",
+      "emailOrPhone": "0395376535",
+      "fullName": "Lê Quang Trung",
+      "username": "trung",
+      "password": "trung212",
+      "status": true,
+      "loginstatus": true,
+      "follower": [
+        {
+          "id": "6b51"
+        },
+        {}
+      ]
+    },
+    {
+      "id": "6b51",
+      "avartar": "https://d1hjkbq40fs2x4.cloudfront.net/2016-01-31/files/1045-2.jpg",
+      "emailOrPhone": "0896857905",
+      "fullName": "Lê Quang Bao",
+      "username": "bao",
+      "password": "bao@142005",
+      "status": true,
+      "loginstatus": false,
+      "follower": [
+        {
+          "id": "5596"
+        },
+        {}
+      ]
+    }
+  ],
+  "posts": [
+    {
+      "id": "5596",
+      "username": "trung",
+      "avartar": "https://d1hjkbq40fs2x4.cloudfront.net/2016-01-31/files/1045-2.jpg",
+      "image": "https://d1hjkbq40fs2x4.cloudfront.net/2016-01-31/files/1045-2.jpg",
+      "caption": "một ngày đẹp trời"
+    },
+    {
+      "id": "6b51",
+      "username": "bao",
+      "avartar": "https://d1hjkbq40fs2x4.cloudfront.net/2016-01-31/files/1045-2.jpg",
+      "image": "https://d1hjkbq40fs2x4.cloudfront.net/2016-01-31/files/1045-2.jpg",
+      "caption": "một ngày đẹp trời"
+    }
+  ],
+  "admin": [
+    {
+      "id": "1",
+      "profilePicture": "https://d1hjkbq40fs2x4.cloudfront.net/2016-01-31/files/1045-2.jpg",
+      "username": "bao",
+      "password": "bao123"
+    }
+  ]
+}
