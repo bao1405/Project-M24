@@ -56,17 +56,15 @@ const Header: React.FC = () => {
                         <ul>
                             <li style={{ height: "50px", display: "flex" }}>
                                 <i className="fa-solid fa-house text-[#565555] text-[22px]" style={{ marginTop: "10px" }}></i>
-                                <Link to="/home">
-                                    <a href="/home" className="block py-2" style={{ marginLeft: "10px", fontSize: "20px" }}>
+                                    <Link to="/home" className="block py-2" style={{ marginLeft: "10px", fontSize: "20px" }}>
                                         Home
-                                    </a>
-                                </Link>
+                                    </Link>
                             </li>
                             <li style={{ height: "50px", display: "flex" }}>
                                 <i className="fa-solid fa-magnifying-glass text-[#565555] text-[22px]" style={{ marginTop: "12px" }}></i>
-                                <a href="#" className="block py-2" style={{ marginLeft: "10px", fontSize: "20px" }} onClick={toggleSearchForm}>
+                                <Link to="" className="block py-2" style={{ marginLeft: "10px", fontSize: "20px" }} onClick={toggleSearchForm}>
                                     Search
-                                </a>
+                                </Link>
                             </li>
                             {showSearchForm && (
                                 <div className="absolute bg-white border border-gray-300 shadow-lg rounded-md p-4 mt-2" style={{ marginLeft: "30px" }}>
@@ -86,7 +84,7 @@ const Header: React.FC = () => {
                                                         alt={`Avatar of ${result.username}`}
                                                         className="w-8 h-8 rounded-full mr-2"
                                                     />
-                                                    <a href={`/profile/${result.id}`}>{result.username}</a> {/* Link to the profile */}
+                                                    <Link to={`/user/${result.id}`}>{result.username}</Link> {/* Link to the profile */}
                                                 </li>
                                             ))}
                                         </ul>
@@ -97,9 +95,9 @@ const Header: React.FC = () => {
                             )}
                             <li style={{ height: "50px", display: "flex" }}>
                                 <i className="fa-solid fa-plane text-[#565555] text-[22px]" style={{ marginTop: "13px" }}></i>
-                                <a href="#" className="block py-2" style={{ marginLeft: "10px", fontSize: "20px" }}>
+                                <Link to="" className="block py-2" style={{ marginLeft: "10px", fontSize: "20px" }}>
                                     Explore
-                                </a>
+                                </Link>
                             </li>
                             <li style={{ height: "50px", display: "flex" }}>
                                 <i className="fa-solid fa-video text-[#565555] text-[22px]" style={{ marginTop: "13px" }}></i>
@@ -127,10 +125,9 @@ const Header: React.FC = () => {
                             </li>
                             <li style={{ height: "50px", display: "flex" }}>
                                 <i className="fa-solid fa-user text-[#565555] text-[22px]" style={{ marginTop: "13px" }}></i>
-                                <Link to="/profile">
-                                    <a href="" className="block py-2" style={{ marginLeft: "10px", fontSize: "20px" }}>
-                                        Profile
-                                    </a>
+                                
+                                <Link to="/profile" className="block py-2" style={{ marginLeft: "10px", fontSize: "20px" }}>
+                                    Profile
                                 </Link>
                             </li>
                             <li style={{ height: "50px", display: "flex" }}>

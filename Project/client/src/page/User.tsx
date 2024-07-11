@@ -1,23 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { fetchUser, User } from '../services/home';
-import { fetchPosts, Post } from '../services/home'; // Ensure correct import path for Post type
+import { fetchPosts, Post } from '../services/home';
+import { useParams } from 'react-router-dom';
+import { getUserById, updateUser } from '../services/user'; // Ensure correct import path for updateUser
 
 const Profile: React.FC = () => {
+    const { id } = useParams<{ id: string }>();
     const [users, setUsers] = useState<User[]>([]);
     const [postsByUserOnline, setPostsByUserOnline] = useState<Post[]>([]);
+    const [user, setUser] = useState<User | null>(null); // State to store user information
+    const [isFollowing, setIsFollowing] = useState<boolean>(false); // State to track follow status
+    const loggedInUserId = 'yourLoggedInUserId'; // Replace with actual logged-in user ID
+
+    useEffect(() => {
+        const fetchUserById = async () => {
+            try {
+                if (!id) {
+                    return; // Exit early if id is not defined
+                }
+                const userData = await getUserById(id);
+                setUser(userData);
+                setIsFollowing(userData.follower.includes(loggedInUserId)); // Set initial follow state
+            } catch (error) {
+                console.error('Error fetching user:', error);
+            }
+        };
+
+        fetchUserById();
+    }, [id, loggedInUserId]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const fetchedUsers = await fetchUser();
-                const filteredUsers = fetchedUsers.filter(user => user.loginstatus === true);
-                setUsers(filteredUsers);
+                setUsers(fetchedUsers);
 
-                // Assuming posts are fetched from somewhere
                 const fetchedPosts = await fetchPosts();
-                setPostsByUserOnline(fetchedPosts.filter(post => post.username === filteredUsers[0].username));
+                setPostsByUserOnline(fetchedPosts.filter(post => post.username === fetchedUsers[0].username)); // Adjust the filter condition according to your logic
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -28,32 +48,56 @@ const Profile: React.FC = () => {
 
     const openModalAvatar = async () => {
         try {
-            const fetchedUsers = await fetchUser();
-            const loggedInUser = fetchedUsers.find(user => user.loginstatus === true); // Adjusted comparison
-    
-            if (loggedInUser) {
-                console.log(`Avatar URL: ${loggedInUser.avartar}`);
+            if (user) {
+                console.log(`Avatar URL for user ${id}: ${user.avartar}`);
                 // Implement modal logic here to display the avatar
             } else {
-                console.log('No user is currently logged in');
+                console.log(`No user found with id ${id}`);
             }
         } catch (error) {
-            console.error('Error fetching users:', error);
+            console.error('Error fetching user:', error);
         }
     };
-    openModalAvatar();
 
     const openModalPost = (postId: number) => {
-        // Implement your logic here to open post modal
-        const post = postsByUserOnline.find(post => post.id === postId.toString()); // Convert postId to string if necessary
+        const post = postsByUserOnline.find(post => post.id === postId.toString());
         if (post) {
-            console.log(`Opening post modal for post id ${postId}`);
+            console.log(`Opening post modal for post id ${postId} of user ${id}`);
             // Implement modal logic here
         } else {
-            console.log(`Post with id ${postId} not found`);
+            console.log(`Post with id ${postId} not found for user ${id}`);
         }
     };
+
+    const handleFollow = async () => {
+        try {
+            if (user) {
+                const updatedFollowers = isFollowing
+                    ? user.follower.filter(followerId => followerId !== loggedInUserId)
+                    : [...user.follower, loggedInUserId];
+
+                const updatedUser = { ...user, follower: updatedFollowers };
+                await updateUser(id, updatedUser);
+                setIsFollowing(prevState => !prevState);
+            }
+        } catch (error) {
+            console.error('Error updating follow status:', error);
+        }
+    };
+    useEffect(() => {
+        const getUsers = async () => {
+          try {
+            const fetchedUsers = await fetchUser();
+            // Filter users based on loginstatus as boolean true
+            const filteredUsers = fetchedUsers.filter(user => user.loginstatus === true);
+            setUsers(filteredUsers);
+          } catch (error) {
+            console.error('Error fetching users:', error);
+          }
+        };
     
+        getUsers();
+      }, []);
 
     return (
         <div className="home">
@@ -63,26 +107,28 @@ const Profile: React.FC = () => {
                 </aside>
                 <main>
                     <div className='px-[40px] flex gap-[80px] items-center'>
-                        {/* Display avatar if users array is not empty and there is a logged-in user */}
-                        <img onClick={openModalAvatar} className='cursor-pointer w-[150px] h-[150px] rounded-[50%]' src={users.length > 0 && users.find(user => user.loginstatus === true) ? users.find(user => user.loginstatus === true)!.avartar : ''} alt="" />
+                        {user && (
+                            <img onClick={openModalAvatar} className='cursor-pointer w-[150px] h-[150px] rounded-[50%]' src={user.avartar} alt="User Avatar" />
+                        )}
                         <div className='flex flex-col gap-[30px]'>
                             <div className='flex gap-[20px] items-center'>
-                                <div className='text-[20px]'>{users.length > 0 && users.find(user => user.loginstatus === true) ? users.find(user => user.loginstatus === true)!.username : ''}</div>
-                                <Link to={'edit'}><button className='opacity-40 text-[14px]'>Chỉnh sửa trang cá nhân</button></Link>
+                                <div className='text-[20px]'>{user?.username}</div>
+                                <button onClick={handleFollow} className='opacity-40 text-[14px]'>
+                                    {isFollowing ? 'Đã follow' : 'Follow'}
+                                </button>
                                 <button className='opacity-40 text-[14px]'>Xem kho lưu trữ</button>
                             </div>
                             <div className='flex gap-[40px]'>
                                 <div><span className='font-bold'>{postsByUserOnline.length}</span> bài viết</div>
-                                <div><span className='font-bold'>{users.length > 0 && users.find(user => user.loginstatus === true) ? users.find(user => user.loginstatus === true)!.follower.length : 0}</span> người theo dõi</div>
-                                <div>Đang theo dõi <span className='font-bold'>{users.length > 0 && users.find(user => user.loginstatus === true) ? users.filter(user => user.follower.includes(users.find(user => user.loginstatus === true)!.id)).length : 0}</span> người dùng</div>
+                                <div><span className='font-bold'>{user?.follower.length}</span> người theo dõi</div>
+                                <div>Đang theo dõi <span className='font-bold'>{user?.following.length}</span> người dùng</div>
                             </div>
                         </div>
                     </div>
-                    {/* Header end */}
                     <div className='mt-[40px] ml-[20px] mb-[40px]'>
                         <i className='bx bx-plus bx-border-circle text-[55px] bg-[rgb(250,250,250)] text-[rgb(199,199,199)] border-1'></i>
                     </div>
-                    <hr style={{width:"1120px"}}/>
+                    <hr style={{ width: "1120px" }} />
                     <div className='my-[20px] flex justify-center gap-[200px]'>
                         <div className='flex items-center gap-[10px] text-black cursor-pointer'>
                             <i className='bx bx-menu bx-border'></i>
@@ -97,10 +143,9 @@ const Profile: React.FC = () => {
                             <div className='uppercase'>Được gắn thẻ</div>
                         </div>
                     </div>
-                    {/* Post start */}
                     <div className='grid grid-cols-3 gap-[5px]'>
                         {postsByUserOnline.sort((a, b) => b.id - a.id).map((post: Post) => (
-                            <img key={post.id} onClick={() => openModalPost(post.id)} className='h-[300px] w-[300px] hover:opacity-85 cursor-pointer' src={post.image} alt="" />
+                            <img key={post.id} onClick={() => openModalPost(post.id)} className='h-[300px] w-[300px] hover:opacity-85 cursor-pointer' src={post.image} alt={`Post ${post.id}`} />
                         ))}
                     </div>
                 </main>

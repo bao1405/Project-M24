@@ -21,9 +21,12 @@ export interface User {
   avartar: string;
   loginstatus:boolean;
   follower:string;
+  following:string;
 }
 
 export const fetchUser = async (): Promise<User[]> => {
   const response = await axios.get('http://localhost:5000/users'); // Update with the correct path to your db.json
   return response.data; // Assuming your db.json has an admin field
 };
+
+

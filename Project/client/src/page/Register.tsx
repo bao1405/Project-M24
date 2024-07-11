@@ -10,6 +10,7 @@ const SignUpForm: React.FC = () => {
     password: '',
     status: true,
     loginstatus: false
+    
   });
 
   const [errors, setErrors] = useState({

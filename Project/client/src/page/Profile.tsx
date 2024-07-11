@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { fetchUser, User } from '../services/home';
-import { fetchPosts, Post } from '../services/home'; // Ensure correct import path for Post type
+import { fetchPosts, Post } from '../services/home';
 
 const Profile: React.FC = () => {
     const [users, setUsers] = useState<User[]>([]);
@@ -32,7 +32,7 @@ const Profile: React.FC = () => {
             const loggedInUser = fetchedUsers.find(user => user.loginstatus === true); // Adjusted comparison
     
             if (loggedInUser) {
-                console.log(`Avatar URL: ${loggedInUser.avartar}`);
+                console.log(`Avatar URL: ${loggedInUser.avatar}`);
                 // Implement modal logic here to display the avatar
             } else {
                 console.log('No user is currently logged in');
@@ -41,7 +41,6 @@ const Profile: React.FC = () => {
             console.error('Error fetching users:', error);
         }
     };
-    openModalAvatar();
 
     const openModalPost = (postId: number) => {
         // Implement your logic here to open post modal
@@ -53,7 +52,6 @@ const Profile: React.FC = () => {
             console.log(`Post with id ${postId} not found`);
         }
     };
-    
 
     return (
         <div className="home">
@@ -74,7 +72,7 @@ const Profile: React.FC = () => {
                             <div className='flex gap-[40px]'>
                                 <div><span className='font-bold'>{postsByUserOnline.length}</span> bài viết</div>
                                 <div><span className='font-bold'>{users.length > 0 && users.find(user => user.loginstatus === true) ? users.find(user => user.loginstatus === true)!.follower.length : 0}</span> người theo dõi</div>
-                                <div>Đang theo dõi <span className='font-bold'>{users.length > 0 && users.find(user => user.loginstatus === true) ? users.filter(user => user.follower.includes(users.find(user => user.loginstatus === true)!.id)).length : 0}</span> người dùng</div>
+                                <div>Đang theo dõi <span className='font-bold'>{users.length > 0 && users.find(user => user.loginstatus === true) ? users.find(user => user.loginstatus === true)!.following.length : 0}</span> người dùng</div>
                             </div>
                         </div>
                     </div>
